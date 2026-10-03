@@ -1,0 +1,1719 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>আছিরগঞ্জ আলিম মাদরাসা</title>
+<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Noto+Serif+Bengali:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<link rel="manifest" href="icons/manifest.json">
+<link rel="icon" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="theme-color" content="#073328">
+<style>
+:root{--bg:#f8f3e8;--card:#fffdf8;--g:#0c4f40;--g-deep:#073328;--l:#e9f1ea;--t:#24302a;--m:#71786c;--b:#e6dcc3;--gold:#b6862c;--gold-soft:#e8d6a8;--red:#c0392b}
+body.dark{--bg:#121a16;--card:#1b2620;--g:#2ea377;--g-deep:#0a1512;--l:#21332a;--t:#eaf1ec;--m:#93a297;--b:#2c3b33;--gold:#d8b45e;--gold-soft:#3a3222;--red:#e2695a}
+*{box-sizing:border-box}
+body,input,select,button{font-family:'Noto Sans Bengali',sans-serif}
+h1,h2,h3,h4,.brand b,.hero h2{font-family:'Noto Serif Bengali',serif}
+body{margin:0;background:var(--bg);color:var(--t);display:flex;justify-content:center;background-image:radial-gradient(circle at 1px 1px,rgba(12,79,64,0.07) 1px,transparent 1.6px);background-size:22px 22px}
+.app{width:100%;max-width:560px;min-height:100vh}
+body.pc .app{max-width:1240px;min-width:1024px}
+.top{position:sticky;top:0;z-index:5;background:var(--g-deep);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid var(--gold);box-shadow:0 6px 16px #07332833}
+.brand{display:flex;align-items:center;gap:11px}
+.logo{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--gold-soft)}
+.brand b{color:#fdf8ec;font-size:16.5px;letter-spacing:.2px}
+.brand small{display:block;color:var(--gold-soft);font-size:10px;margin-top:2px;font-family:'Noto Sans Bengali',sans-serif}
+.top-right{display:flex;align-items:center;gap:4px}
+.icon{border:0;background:none;font-size:23px;padding:8px;color:#fdf8ec;cursor:pointer;border-radius:50%;transition:.2s;display:flex;align-items:center;justify-content:center}
+.icon:hover{background:#ffffff1a}
+.menu{position:absolute;right:12px;top:58px;background:var(--card);border:1px solid var(--b);border-radius:12px;display:none;box-shadow:0 10px 28px #07332822;overflow:hidden;z-index:10}
+.menu button{display:block;width:190px;border:0;background:none;padding:12px;text-align:left;color:var(--t);cursor:pointer;font-size:14px}
+.menu button:hover{background:var(--l)}
+.menu button.active{background:var(--l);color:var(--g);font-weight:700}
+.menu .menu-sep{height:1px;background:var(--b);margin:2px 0}
+.pattern-strip{height:10px;width:100%;background-image:linear-gradient(135deg,var(--gold) 25%,transparent 25%),linear-gradient(225deg,var(--gold) 25%,transparent 25%),linear-gradient(45deg,var(--gold) 25%,transparent 25%),linear-gradient(315deg,var(--gold) 25%,var(--g-deep) 25%);background-position:10px 0,10px 0,0 0,0 0;background-size:20px 20px;background-repeat:repeat-x;opacity:.9}
+.page{display:none;padding:16px}
+.page.on{display:block}
+.card{background:var(--card);padding:18px;border:1px solid var(--b);border-radius:14px;margin-bottom:15px;box-shadow:0 3px 0 0 var(--b)}
+.hero{padding:0;overflow:hidden;border:1px solid var(--b);box-shadow:none}
+.hero img{width:100%;height:220px;object-fit:cover;display:block}
+.hero div{padding:16px 18px 20px}
+.hero h2{color:var(--g);margin:0 0 8px;font-size:21px}
+.hero p,.muted{color:var(--m);font-size:13px;line-height:1.75}
+.green{color:var(--g)}
+.title{display:flex;align-items:center;gap:8px;color:var(--g);font-size:16px;margin:0 0 14px;padding-bottom:10px;border-bottom:1px solid var(--gold-soft)}
+.title .material-icons-round{color:var(--gold);font-size:20px}
+.form label{font-size:12.5px;font-weight:600;display:block;margin:12px 0 5px;color:var(--m)}
+.form input,.form select{width:100%;padding:12px;border:1px solid var(--b);border-radius:9px;background:var(--bg);color:var(--t);font-size:14px}
+.form input:focus,.form select:focus{outline:2px solid var(--g);outline-offset:1px}
+button.btn{width:100%;padding:13px;border-radius:9px;border:0;font-weight:700;cursor:pointer;margin-top:14px;display:flex;justify-content:center;align-items:center;gap:6px;font-size:14.5px}
+.primary{background:var(--g);color:#fdf8ec;box-shadow:0 3px 0 0 var(--g-deep)}
+.primary:active{transform:translateY(2px);box-shadow:0 1px 0 0 var(--g-deep)}
+.outline{background:transparent!important;border:1.5px solid var(--g)!important;color:var(--g)}
+.notice{padding:12px 0;border-bottom:1px dashed var(--b);font-size:13.5px}
+.notice:last-child{border:0}
+.date{font-size:11px;color:var(--gold);font-weight:600;margin-bottom:3px}
+video{width:100%;border-radius:10px;background:#000}
+.person{display:flex;align-items:center;gap:14px}
+.avatar{width:54px;height:54px;border-radius:50%;background:var(--l);display:grid;place-items:center;color:var(--g);font-size:26px;border:2px solid var(--gold-soft)}
+.status{padding:15px;border-radius:12px;color:#fff;margin-bottom:15px}
+.open{background:var(--g)}
+.closed{background:var(--red)}
+.event{padding:12px;border:1px solid var(--b);border-radius:10px;margin-bottom:10px;background:var(--bg)}
+.event h4{margin:0 0 6px;color:var(--g);font-size:15px}
+.resultHead{text-align:center;border-bottom:2px dashed var(--gold-soft);padding-bottom:12px}
+.resultHead h2{color:var(--g);font-size:20px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.info{padding:10px;background:var(--bg);border:1px solid var(--b);border-radius:9px}
+.info small{display:block;color:var(--m);font-size:10px}
+.info b{font-size:13px}
+.table{width:100%;border-collapse:collapse;font-size:12px}
+.table th{color:var(--g);font-weight:700}
+.table th,.table td{padding:9px 5px;border-bottom:1px solid var(--b);text-align:left}
+.pill{padding:3px 9px;border-radius:15px;background:var(--l);color:var(--g);font-weight:bold}
+.summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;background:var(--g);color:#fdf8ec;border-radius:12px;padding:15px;margin-top:15px}
+.summary p{font-size:10px;margin:0;opacity:.85}
+.summary h3,.summary h4{margin:4px 0 0}
+.summary div:nth-child(n+2){text-align:right}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{text-align:center;background:var(--bg);padding:14px;border-radius:10px;border:1px solid var(--b)}
+.stat b{display:block;font-size:18px;color:var(--g);margin:4px 0 2px}
+.back{width:auto!important}
+.foot{text-align:center;padding:20px;position:relative;z-index:2}
+.dev{border:1.5px solid var(--gold);background:var(--card);border-radius:20px;padding:8px 16px;color:var(--g);font-weight:600;cursor:pointer}
+.modal{display:none;position:fixed;inset:0;background:#07332899;z-index:20;align-items:center;justify-content:center;padding:18px}
+.modal.on{display:flex}
+.modalBox{background:#fffdf8;border-radius:16px;padding:20px;width:min(430px,100%);text-align:center;position:relative;max-height:95vh;overflow-y:auto;border:1px solid var(--b)}
+.modalBox img{max-width:100%;max-height:340px;border-radius:10px}
+.close{position:absolute;right:10px;top:5px;border:0;background:none;font-size:28px;cursor:pointer;color:var(--m)}
+.link{display:block;text-decoration:none;color:var(--t);background:var(--bg);padding:11px;border-radius:9px;margin-top:8px;font-size:12.5px;border:1px solid var(--b)}
+.dev-name{cursor:pointer;display:inline-flex;align-items:center;gap:6px;border-bottom:1px dashed var(--gold);padding-bottom:2px}
+.dev-name .material-icons-round{font-size:16px;color:var(--gold)}
+.loader{display:none;position:fixed;inset:0;background:#073328d9;color:#fdf8ec;z-index:30;place-items:center;font-size:16px}
+
+/* AI */
+.ai-card{background:linear-gradient(135deg,#fffdf8,#f2ead6);border:1px solid var(--b);border-left:4px solid var(--gold);cursor:pointer;transition:.2s;display:flex;align-items:center;gap:15px;padding:18px;box-shadow:0 3px 0 0 var(--gold-soft)}
+.ai-card:active{transform:translateY(2px);box-shadow:0 1px 0 0 var(--gold-soft)}
+.ai-icon-large{font-size:36px;width:52px;height:52px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.ai-icon-large svg{width:100%;height:100%}
+.ai-title-wrap h3{margin:0;color:var(--g);font-size:17px}
+.ai-title-wrap p{margin:4px 0 0;font-size:12.5px;color:var(--m)}
+.chat-container{display:flex;flex-direction:column;height:calc(100vh - 100px);background:var(--card);border:1px solid var(--b);border-radius:16px;overflow:hidden}
+body.pc .chat-container{height:640px}
+.chat-header{background:var(--g-deep);color:#fdf8ec;padding:16px;text-align:center;border-bottom:3px solid var(--gold)}
+.chat-header-icon{width:48px;height:48px;margin:0 auto}
+.chat-header-icon svg{width:100%;height:100%}
+.chat-header h3{margin:5px 0 0;font-size:18px}
+.chat-header small{opacity:.75;font-size:12px;font-family:'Noto Sans Bengali',sans-serif}
+.chat-filters{display:flex;gap:10px;padding:10px;background:var(--l);border-bottom:1px solid var(--b);flex-wrap:wrap}
+.chat-filters select{flex:1;min-width:100px;padding:8px;border-radius:8px;border:1px solid var(--b);font-size:13px;outline:none;background:#fff}
+.chat-body{flex:1;padding:15px;overflow-y:auto;background:#fdfaf2;display:flex;flex-direction:column;gap:12px}
+.msg-bubble{max-width:85%;padding:12px 16px;border-radius:14px;font-size:14px;line-height:1.5;word-wrap:break-word}
+.msg-ai{background:var(--l);color:var(--t);align-self:flex-start;border-bottom-left-radius:4px;border:1px solid var(--b)}
+.msg-user{background:var(--g);color:#fdf8ec;align-self:flex-end;border-bottom-right-radius:4px}
+.chat-input-area{padding:12px;background:#fff;border-top:1px solid var(--b);display:flex;gap:10px;align-items:center}
+.chat-input-area input{flex:1;padding:12px 16px;border-radius:25px;border:1px solid var(--b);outline:none;font-size:14px;background:var(--bg)}
+.btn-send{background:var(--g);color:#fdf8ec;border:none;border-radius:50%;width:45px;height:45px;display:grid;place-items:center;cursor:pointer;transition:.2s;flex-shrink:0}
+.btn-send:active{transform:scale(.9)}
+.btn-send:disabled{background:var(--m);cursor:not-allowed}
+.typing-indicator{align-self:flex-start;color:var(--m);font-size:12px;font-style:italic;display:none;margin-top:-5px;padding-left:5px}
+.ai-banner{background:#f4e3b0;color:#8a5a12;text-align:center;padding:9px;font-size:12px;font-weight:bold;display:none}
+
+/* API modal */
+.api-modal .modalBox{max-width:420px}
+.api-modal .modalBox h3{color:var(--g);margin-top:0}
+.api-modal .modalBox label{display:block;text-align:left;font-size:13px;font-weight:600;margin:12px 0 5px;color:var(--m)}
+.api-modal .modalBox input,.api-modal .modalBox select{width:100%;padding:12px;border:1px solid var(--b);border-radius:9px;font-size:14px;background:var(--bg);color:var(--t)}
+.api-modal .modalBox .api-status{padding:10px;border-radius:8px;margin:10px 0;font-size:13px}
+.api-modal .modalBox .api-status.active{background:#dcefe4;color:#0c4f40}
+.api-modal .modalBox .api-status.inactive{background:#f7dede;color:#8f2a1f}
+.api-modal .modalBox .btn-group{display:flex;gap:10px;margin-top:15px}
+.api-modal .modalBox .btn-group button{flex:1;padding:12px;border-radius:9px;border:0;font-weight:bold;cursor:pointer}
+.api-modal .modalBox .btn-group .btn-save{background:var(--g);color:#fdf8ec}
+.api-modal .modalBox .btn-group .btn-cancel{background:var(--bg);color:var(--t);border:1px solid var(--b)}
+.api-modal .modalBox .btn-group .btn-save:disabled{opacity:.6;cursor:not-allowed}
+.api-modal .modalBox .api-key-masked{font-family:monospace;letter-spacing:2px;background:var(--bg);padding:8px 12px;border-radius:8px;font-size:14px;word-break:break-all;border:1px dashed var(--b)}
+.api-modal .modalBox .password-error{color:var(--red);font-size:12px;margin-top:5px;display:none}
+
+/* Teacher contact list */
+#teacherContactPage .gw-wrap{font-family:"Noto Sans Bengali",sans-serif;border-radius:18px;overflow:hidden;box-shadow:0 3px 0 0 var(--b)}
+#teacherContactPage .gw-header{background:linear-gradient(90deg,#0078d7,#00b7ff);color:#fff;text-align:center;padding:16px 10px;font-size:20px;font-weight:bold;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+#teacherContactPage .gw-search-box{text-align:center;padding:15px;background:linear-gradient(120deg,#d0eaff,#e7f3ff)}
+#teacherContactPage .gw-search-box input{width:100%;max-width:600px;padding:12px 15px;border-radius:10px;border:1px solid #0078d7;font-size:15px;outline:none;box-shadow:0 0 6px rgba(0,0,0,.1);font-family:inherit;background:#fff;color:#123}
+#teacherContactPage .gw-search-box input:focus{box-shadow:0 0 8px rgba(0,120,215,.3)}
+#teacherContactPage .gw-contact-list{padding:10px;background:linear-gradient(120deg,#d0eaff,#e7f3ff)}
+#teacherContactPage .gw-contact{background:#fff;margin:10px 0;padding:12px;border-radius:15px;box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;justify-content:space-between;align-items:center;gap:10px;transition:transform .2s ease}
+#teacherContactPage .gw-contact:active,#teacherContactPage .gw-contact:hover{transform:scale(1.02);background:#f9fcff}
+#teacherContactPage .gw-contact-info{flex-grow:1;text-align:left;min-width:0}
+#teacherContactPage .gw-contact-info h3{margin:0;font-size:17px;color:#004c91;word-break:break-word;font-family:'Noto Serif Bengali',serif}
+#teacherContactPage .gw-contact-info p{margin:5px 0 0;color:#333;font-size:14px}
+#teacherContactPage .gw-name-en{display:block;font-size:13px;color:#4a6a8a;margin-top:2px;font-family:'Noto Sans Bengali',sans-serif}
+#teacherContactPage .gw-designation{display:inline-block;margin-top:4px;padding:2px 10px;border-radius:12px;background:#e3f1ff;color:#0060b0;font-size:12px;font-weight:600}
+#teacherContactPage .gw-call-btn{background:linear-gradient(90deg,#28a745,#3ddc84);color:#fff;border:none;border-radius:10px;padding:9px 14px;cursor:pointer;font-size:14px;font-weight:bold;white-space:nowrap;font-family:inherit}
+#teacherContactPage .gw-call-btn:active{background:linear-gradient(90deg,#23923d,#2dc271)}
+#teacherContactPage .gw-call-btn.disabled{background:#aaa;cursor:not-allowed}
+#teacherContactPage .gw-special-message{text-align:center;background:#0078d7;color:#fff;margin:10px 0;padding:18px;border-radius:15px;font-size:15px;line-height:1.8;box-shadow:0 3px 8px rgba(0,0,0,.2);animation:gwFadeIn 1s ease-in-out}
+#teacherContactPage .gw-no-result{text-align:center;background:#fff;padding:25px;border-radius:15px;margin-top:10px;color:#666;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+@keyframes gwFadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media (max-width:480px){
+#teacherContactPage .gw-header{font-size:17px;padding:14px 5px}
+#teacherContactPage .gw-contact{padding:10px}
+#teacherContactPage .gw-contact-info h3{font-size:15px}
+#teacherContactPage .gw-contact-info p{font-size:13px}
+#teacherContactPage .gw-call-btn{padding:8px 11px;font-size:13px}
+}
+.teacher-btn-row{margin-top:6px}
+.teacher-open-btn{width:100%;padding:12px;border-radius:14px;border:1.5px solid var(--gold);background:var(--card);color:var(--g);font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;margin-bottom:12px}
+.teacher-open-btn .material-icons-round{color:var(--gold);font-size:19px}
+.download-app-btn{width:100%;padding:13px;border-radius:14px;border:0;background:var(--g);color:#fdf8ec;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;margin-bottom:12px;box-shadow:0 3px 0 0 var(--g-deep)}
+.download-app-btn:active{transform:translateY(2px);box-shadow:0 1px 0 0 var(--g-deep)}
+.dl-link-box{margin-top:12px;padding:14px;background:var(--bg);border:1px dashed var(--gold);border-radius:10px;font-family:monospace;font-size:13px;color:var(--t);word-break:break-all;user-select:all;-webkit-user-select:all;text-align:left}
+
+/* PC mode */
+body.pc .top{padding:18px 36px}
+body.pc .brand b{font-size:19px}
+body.pc .brand small{font-size:11px}
+body.pc .logo{width:50px;height:50px}
+body.pc .page{padding:30px 36px 46px}
+body.pc .card{border-radius:16px;padding:22px}
+body.pc .title{font-size:17px}
+body.pc .hero h2{font-size:27px}
+body.pc .hero p{font-size:14.5px}
+body.pc .hero img{height:320px}
+body.pc .form label{font-size:13px}
+body.pc .form input,body.pc .form select{padding:13px;font-size:14.5px}
+body.pc button.btn{font-size:15px;padding:14px}
+body.pc .btn.primary:hover{filter:brightness(1.06)}
+body.pc .btn.outline:hover{background:var(--l)!important}
+body.pc .ai-card{transition:transform .15s ease,box-shadow .15s ease}
+body.pc .ai-card:hover{transform:translateY(-2px);box-shadow:0 6px 0 0 var(--gold-soft)}
+body.pc #home.page.on{display:grid;grid-template-columns:1.7fr 1fr;grid-template-areas:"hero hero" "ai side1" "video side2" "video side3";gap:22px;align-items:start}
+body.pc #home .hero{grid-area:hero;margin-bottom:0}
+body.pc #home .ai-card{grid-area:ai;margin-bottom:0}
+body.pc #home #searchFormCard{grid-area:side1;margin-bottom:0}
+body.pc #home #videoCard{grid-area:video;margin-bottom:0}
+body.pc #home #homeNoticesCard{grid-area:side2;margin-bottom:0}
+body.pc #home #teacherCard{grid-area:side3;margin-bottom:0}
+body.pc #home #videoCard video{height:320px;object-fit:cover}
+body.pc .notice-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-areas:"status status" "events notices";gap:22px;align-items:start}
+body.pc .notice-grid #status{grid-area:status;margin-bottom:0}
+body.pc .notice-grid #eventsCard{grid-area:events;margin-bottom:0}
+body.pc .notice-grid #noticesListCard{grid-area:notices;margin-bottom:0}
+body.pc .result-grid{display:grid;grid-template-columns:1.8fr 1fr;grid-template-areas:"print stats";gap:22px;align-items:start}
+body.pc .result-grid #printArea{grid-area:print;margin-bottom:0}
+body.pc .result-grid #statsCard{grid-area:stats;margin-bottom:0}
+body.pc #result .grid{grid-template-columns:repeat(3,1fr)}
+body.pc #aiChatPage.page.on{max-width:820px;margin:0 auto}
+body.pc #message .card{max-width:480px;margin:40px auto 0}
+body.pc #teacherContactPage.page.on{max-width:760px;margin:0 auto}
+
+@media print{
+.top,.foot,.noPrint,.pattern-strip{display:none!important}
+.page{display:none!important}
+.page.on{display:block!important;padding:0}
+.card{box-shadow:none}
+#home.page.on,.notice-grid,.result-grid{display:block!important}
+}
+</style>
+</head>
+<body>
+<div class="app">
+    <header class="top">
+        <div class="brand">
+            <img class="logo" src="https://i.ibb.co/q30vd41H/file-000000005704820b91065a2424f27c5b.png">
+            <div>
+                <b data-i18n="madrasaName">আছিরগঞ্জ আলিম মাদরাসা</b>
+                <small data-i18n="portalSub">ডিজিটাল তথ্য ও ফলাফল পোর্টাল</small>
+            </div>
+        </div>
+        <div class="top-right">
+            <button class="icon" onclick="toggleDarkMode()" title="Dark Mode">
+                <span class="material-icons-round" id="darkModeIcon">dark_mode</span>
+            </button>
+            <button class="icon icon-settings" onclick="openAPISettings()" title="API Settings">
+                <span class="material-icons-round">settings</span>
+            </button>
+            <button class="icon" onclick="toggleMenu()">
+                <span class="material-icons-round">more_vert</span>
+            </button>
+            <div class="menu" id="menu">
+                <button id="menuMobile" onclick="mode('mobile')" data-i18n="menuMobile">📱 মোবাইল মোড</button>
+                <button id="menuPc" onclick="mode('pc')" data-i18n="menuPc">🖥️ পিসি মোড</button>
+                <div class="menu-sep"></div>
+                <button id="menuEn" onclick="setLang('en')">🇬🇧 English Mode</button>
+                <button id="menuBn" onclick="setLang('bn')">🇧🇩 বাংলা মোড</button>
+            </div>
+        </div>
+    </header>
+    <div class="pattern-strip"></div>
+
+    <section id="home" class="page on">
+        <div class="card hero">
+            <img src="https://cdn.phototourl.com/free/2026-09-03-1035af8d-3e9d-46f3-846b-d2ebc2574961.jpg">
+            <div>
+                <h2 data-i18n="madrasaName">আছিরগঞ্জ আলিম মাদরাসা</h2>
+                <p data-i18n="heroText">আধুনিক শিক্ষা ও ইসলামী মূল্যবোধের সমন্বয়ে একটি সুন্দর শিক্ষাপ্রতিষ্ঠান।</p>
+            </div>
+        </div>
+
+        <div class="card ai-card noPrint" onclick="openAIChat()">
+            <div class="ai-icon-large">
+                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                    <defs><linearGradient id="aiBadgeGrad" x1="0" y1="0" x2="64" y2="64"><stop offset="0%" stop-color="#0c4f40"/><stop offset="100%" stop-color="#073328"/></linearGradient></defs>
+                    <circle cx="32" cy="32" r="30" fill="url(#aiBadgeGrad)" stroke="#b6862c" stroke-width="2"/>
+                    <path d="M32 18 L50 26 L32 34 L14 26 Z" fill="#e8d6a8"/>
+                    <path d="M21 29.5 V38 C21 41 26 44 32 44 C38 44 43 41 43 38 V29.5" fill="none" stroke="#e8d6a8" stroke-width="2"/>
+                    <line x1="50" y1="26" x2="50" y2="35" stroke="#b6862c" stroke-width="2"/>
+                    <circle cx="50" cy="36.6" r="2" fill="#b6862c"/>
+                    <path d="M32 6 L34 11.5 L39.5 13.5 L34 15.5 L32 21 L30 15.5 L24.5 13.5 L30 11.5 Z" fill="#b6862c"/>
+                </svg>
+            </div>
+            <div class="ai-title-wrap">
+                <h3 data-i18n="aiTeacher">আছিরগঞ্জ AI শিক্ষক</h3>
+                <p data-i18n="aiCardDesc">মাদরাসার যেকোনো শিক্ষামূলক প্রশ্ন করুন ও সমাধান পান</p>
+            </div>
+            <span class="material-icons-round" style="margin-left:auto;color:var(--gold);">chevron_right</span>
+        </div>
+
+        <div class="card form" id="searchFormCard">
+            <h3 class="title"><span class="material-icons-round">manage_search</span> <span data-i18n="searchResult">রেজাল্ট খুঁজুন</span></h3>
+            <form id="searchForm">
+                <label data-i18n="lblClass">শ্রেণি</label>
+                <select id="class" onchange="updateExamOptions()"></select>
+                <label data-i18n="lblExam">পরীক্ষার ধরন</label>
+                <select id="exam"></select>
+                <label data-i18n="lblYear">শিক্ষাবর্ষ</label>
+                <select id="year"></select>
+                <label>Student ID / Roll Number</label>
+                <input id="sid" data-i18n-ph="sidPh" placeholder="যেমন: 7 অথবা ৭" required>
+                <button class="btn primary" data-i18n="viewResult">🔍 রেজাল্ট দেখুন</button>
+            </form>
+        </div>
+        <div class="card" id="homeNoticesCard">
+            <h3 class="title" data-i18n="noticeBoard">📢 নোটিশ বোর্ড</h3>
+            <div id="notices" data-i18n="loading">লোড হচ্ছে...</div>
+            <button class="btn outline noPrint" onclick="openNotices()" data-i18n="detailNotice">বিস্তারিত নোটিশ ও তথ্য</button>
+        </div>
+        <div class="card" id="videoCard">
+            <h3 class="title" data-i18n="videoTitle">▶️ মাদ্রাসা ভিডিও</h3>
+            <video controls playsinline>
+                <source src="https://videotourl.com/videos/1788434287802-136df4c4-4b0d-4a16-ba68-ec57b4180211.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="card" id="teacherCard">
+            <h3 class="title" data-i18n="headTeacher">👤 প্রধান শিক্ষক</h3>
+            <div class="person">
+                <div class="avatar">👨‍🏫</div>
+                <div>
+                    <b data-i18n="headName">মাওলানা নুরুল হুদা</b>
+                    <p class="muted" data-i18n="headRole">প্রধান শিক্ষক, আছিরগঞ্জ আলিম মাদরাসা</p>
+                    <a class="link" href="tel:+880 1712-940499">📞+880 1712-940499</a>
+                    <a class="link" href="mailto:asam111976@gmail.com">📧 asam111976@gmail.com</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="aiChatPage" class="page">
+        <button class="btn outline back noPrint" onclick="show('home')" style="margin-bottom:15px;" data-i18n="back">← ফিরে যান</button>
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="chat-header-icon">
+                    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                        <defs><linearGradient id="aiHeaderGrad" x1="0" y1="0" x2="64" y2="64"><stop offset="0%" stop-color="#e8d6a8"/><stop offset="100%" stop-color="#b6862c"/></linearGradient></defs>
+                        <circle cx="32" cy="32" r="30" fill="#0000001a" stroke="#e8d6a8" stroke-width="1.5"/>
+                        <path d="M32 18 L50 26 L32 34 L14 26 Z" fill="url(#aiHeaderGrad)"/>
+                        <path d="M21 29.5 V38 C21 41 26 44 32 44 C38 44 43 41 43 38 V29.5" fill="none" stroke="#fdf8ec" stroke-width="2"/>
+                        <line x1="50" y1="26" x2="50" y2="35" stroke="#e8d6a8" stroke-width="2"/>
+                        <circle cx="50" cy="36.6" r="2" fill="#e8d6a8"/>
+                        <path d="M32 6 L34 11.5 L39.5 13.5 L34 15.5 L32 21 L30 15.5 L24.5 13.5 L30 11.5 Z" fill="#e8d6a8"/>
+                    </svg>
+                </div>
+                <h3 data-i18n="aiTeacher">আছিরগঞ্জ AI শিক্ষক</h3>
+                <small data-i18n="aiSub">আপনার পড়াশোনার বিশ্বস্ত সহযোগী</small>
+            </div>
+            <div id="aiBanner" class="ai-banner" data-i18n="aiOff">বর্তমানে আছিরগঞ্জ AI শিক্ষক সাময়িকভাবে বন্ধ আছে।</div>
+            <div class="chat-filters">
+                <select id="aiSubjectSelect"></select>
+                <select id="aiClassSelect"></select>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="msg-bubble msg-ai" id="chatWelcome" data-i18n-html="aiWelcome">আসসালামু আলাইকুম! 😊<br>আমি আছিরগঞ্জ AI শিক্ষক। মাদরাসার পড়াশোনা বা পাঠ্যক্রম সংক্রান্ত যেকোনো বিষয়ে আমাকে প্রশ্ন করতে পারেন।</div>
+            </div>
+            <div class="typing-indicator" id="typingIndicator" data-i18n="aiThinking">🤔 AI চিন্তা করছে...</div>
+            <div class="chat-input-area">
+                <input type="text" id="aiInput" data-i18n-ph="aiInputPh" placeholder="আপনার প্রশ্ন এখানে লিখুন..." onkeypress="handleAIEnter(event)">
+                <button class="btn-send" id="aiSendBtn" onclick="sendAIMessage()"><span class="material-icons-round">send</span></button>
+            </div>
+        </div>
+    </section>
+
+    <section id="noticePage" class="page">
+        <button class="btn outline back noPrint" onclick="show('home')" data-i18n="back">← ফিরে যান</button>
+        <div class="notice-grid">
+            <div id="status"></div>
+            <div class="card" id="eventsCard">
+                <h3 class="title" data-i18n="events">📅 মাদ্রাসার অনুষ্ঠান</h3>
+                <div id="events" data-i18n="loading">লোড হচ্ছে...</div>
+            </div>
+            <div class="card" id="noticesListCard">
+                <h3 class="title" data-i18n="allNotices">📋 সকল নোটিশ</h3>
+                <div id="allNotices" data-i18n="loading">লোড হচ্ছে...</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="result" class="page">
+        <button class="btn outline back noPrint" onclick="show('home')" data-i18n="back">← ফিরে যান</button>
+        <div class="result-grid">
+        <div class="card" id="printArea">
+            <div class="resultHead">
+                <h2 data-i18n="madrasaName">আছিরগঞ্জ আলিম মাদরাসা</h2>
+                <p data-i18n="marksheet">পরীক্ষার ফলাফল - Marksheet</p>
+                <small id="examOut"></small>
+            </div>
+            <h4 class="green" data-i18n="studentInfo">শিক্ষার্থীর তথ্য</h4>
+            <div class="grid">
+                <div class="info"><small data-i18n="lblName">নাম</small><b id="name">-</b></div>
+                <div class="info"><small>Student ID</small><b id="idOut">-</b></div>
+                <div class="info"><small data-i18n="lblFather">পিতার নাম</small><b id="father">-</b></div>
+                <div class="info"><small data-i18n="lblMother">মাতার নাম</small><b id="mother">-</b></div>
+                <div class="info"><small data-i18n="lblClass">শ্রেণি</small><b id="classOut">-</b></div>
+                <div class="info"><small data-i18n="lblRoll">রোল</small><b id="roll">-</b></div>
+                <div class="info"><small data-i18n="lblSection">শাখা</small><b id="section">-</b></div>
+            </div>
+            <h4 style="margin:16px 0 8px" data-i18n="subjectResult">বিষয়ভিত্তিক ফলাফল</h4>
+            <div style="overflow:auto">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="thSubject">বিষয়</th>
+                            <th data-i18n="thFull">পূর্ণমান</th>
+                            <th data-i18n="thGot">প্রাপ্ত</th>
+                            <th data-i18n="thGrade">গ্রেড</th>
+                            <th data-i18n="thGP">জিপি</th>
+                        </tr>
+                    </thead>
+                    <tbody id="subjects"></tbody>
+                </table>
+            </div>
+            <div class="summary" id="summary">
+                <div><p data-i18n="totalMarks">মোট নম্বর</p><h3 id="total">0 / 0</h3></div>
+                <div><p data-i18n="gpaLbl">জিপিএ</p><h3 id="gpa">0.00</h3></div>
+                <div><p data-i18n="resultLbl">ফলাফল</p><h4 id="resultStatus">-</h4></div>
+            </div>
+        </div>
+        <div class="card" id="statsCard">
+            <h3 class="title" data-i18n="classStats">📊 শ্রেণীর পরিসংখ্যান</h3>
+            <div class="stats">
+                <div class="stat"><span data-i18n="passed">পাস করেছে</span><b id="pass">০ জন</b><small id="passPct"></small></div>
+                <div class="stat"><span data-i18n="failed">ফেল করেছে</span><b id="fail">০ জন</b><small id="failPct"></small></div>
+            </div>
+            <p style="text-align:center"><span data-i18n="totalStudents">মোট শিক্ষার্থী:</span> <b id="all">০</b> <span data-i18n="persons">জন</span></p>
+        </div>
+        </div>
+    </section>
+
+    <section id="message" class="page">
+        <div class="card" style="text-align:center;padding:40px 20px">
+            <div style="font-size:55px">⚠️</div>
+            <h2 id="msgTitle"></h2>
+            <p class="muted" id="msgText"></p>
+            <button class="btn primary" onclick="show('home')" data-i18n="tryAgain">আবার চেষ্টা করুন</button>
+        </div>
+    </section>
+
+    <section id="teacherContactPage" class="page">
+        <button class="btn outline back noPrint" onclick="show('home')" style="margin-bottom:15px;" data-i18n="back">← ফিরে যান</button>
+        <div class="gw-wrap">
+            <header class="gw-header" data-i18n="teacherPageTitle">📱 Good Word Contact List</header>
+            <div class="gw-search-box">
+                <input type="text" id="teacherSearch" data-i18n-ph="teacherSearchPh" placeholder="নাম, পদবি বা নম্বর লিখে খুঁজুন..." autocomplete="off" oninput="renderTeacherList(this.value)">
+            </div>
+            <div class="gw-contact-list" id="teacherListContainer"></div>
+        </div>
+    </section>
+
+    <section id="downloadPage" class="page">
+        <button class="btn outline back noPrint" onclick="show('home')" style="margin-bottom:15px;" data-i18n="back">← ফিরে যান</button>
+        <div class="card">
+            <h3 class="title"><span class="material-icons-round">download</span> <span data-i18n="dlPageTitle">অ্যাপ ডাউনলোড</span></h3>
+            <p class="muted" data-i18n="dlPageInfo">নিচের লিংকটি কপি করুন, তারপর Chrome বা যেকোনো ব্রাউজারে গিয়ে সার্চ/অ্যাড্রেস বক্সে পেস্ট করে ওপেন করুন এবং অ্যাপটি ডাউনলোড করুন।</p>
+            <div class="dl-link-box" id="dlLinkText"></div>
+            <button class="btn primary" onclick="copyDownloadLink()">
+                <span class="material-icons-round">content_copy</span>
+                <span id="dlCopyLbl" data-i18n="dlCopy">লিংক কপি করুন</span>
+            </button>
+        </div>
+    </section>
+
+    <div class="foot" id="mainFooter">
+        <div class="teacher-btn-row noPrint">
+            <button class="teacher-open-btn" onclick="openTeacherContacts()">
+                <span class="material-icons-round">import_contacts</span>
+                <span data-i18n="teacherBtn">শিক্ষকবৃন্দের নাম্বার তালিকা</span>
+            </button>
+        </div>
+        <div class="noPrint">
+            <button class="download-app-btn" onclick="downloadApp()">
+                <span class="material-icons-round">download</span>
+                <span data-i18n="downloadApp">অ্যাপ ডাউনলোড করুন</span>
+            </button>
+        </div>
+        <button class="dev" onclick="document.getElementById('devModal').classList.add('on')" data-i18n="devInfo">✓ Developer Info</button>
+    </div>
+</div>
+
+<div class="modal api-modal" id="apiSettingsModal" onclick="closeAPISettingsOutside(event)">
+    <div class="modalBox" onclick="event.stopPropagation()">
+        <button class="close" onclick="closeAPISettings()">×</button>
+        <h3 data-i18n="apiTitle">⚙️ API & Model Settings</h3>
+        <div id="apiPasswordStep">
+            <p class="muted" data-i18n="apiPassInfo">API Key বা মডেল পরিবর্তন করতে আপনার পাসওয়ার্ড দিন।</p>
+            <label data-i18n="apiPassLbl">🔑 পাসওয়ার্ড</label>
+            <input type="password" id="apiPassword" data-i18n-ph="apiPassPh" placeholder="পাসওয়ার্ড দিন" onkeypress="if(event.key==='Enter') verifyAPIPassword()">
+            <div class="password-error" id="apiPassError" data-i18n="apiPassErr">❌ ভুল পাসওয়ার্ড। আবার চেষ্টা করুন।</div>
+            <button class="btn primary" onclick="verifyAPIPassword()" style="margin-top:12px;" data-i18n="apiVerify">✅ যাচাই করুন</button>
+        </div>
+        <div id="apiKeyStep" style="display:none;">
+            <p class="muted" data-i18n="apiSelectInfo">API Key এবং মডেল নির্বাচন করুন।</p>
+            <div id="apiStatusBox" class="api-status active">✅ API Key সক্রিয় আছে</div>
+            <label>🔑 API Key</label>
+            <input type="text" id="apiKeyInput" data-i18n-ph="apiKeyPh" placeholder="আপনার API Key দিন">
+            <div style="margin-top:6px;font-size:12px;color:var(--m);"><span id="apiKeyMaskedDisplay" class="api-key-masked"></span></div>
+            <label>🟣 Primary AI Model</label>
+            <select id="primaryModelSelect">
+                <option value="gemini-3.8-flash">🟣 Gemini 3.8 Flash</option>
+                <option value="gemini-3.7-flash">🔵 Gemini 3.7 Flash</option>
+            </select>
+            <label>🔵 Backup AI Model</label>
+            <select id="backupModelSelect">
+                <option value="gemini-3.7-flash">🔵 Gemini 3.7 Flash</option>
+                <option value="gemini-3.8-flash">🟣 Gemini 3.8 Flash</option>
+            </select>
+            <div class="btn-group">
+                <button class="btn-save" id="apiSaveBtn" onclick="saveAPISettings()" data-i18n="save">💾 সংরক্ষণ করুন</button>
+                <button class="btn-cancel" onclick="closeAPISettings()" data-i18n="cancel">বাতিল</button>
+            </div>
+            <div id="apiSaveMsg" style="margin-top:10px;font-size:13px;display:none;"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="devModal" onclick="this.classList.remove('on')">
+    <div class="modalBox" onclick="event.stopPropagation()">
+        <button class="close" onclick="document.getElementById('devModal').classList.remove('on')">×</button>
+        <img src="https://i.ibb.co/F40CvcFb/file-000000006a34820b90f9f1f5fa27a244.png">
+        <h2 class="green dev-name" onclick="openDevPhoto()"><span class="material-icons-round">photo_camera</span>(M) Sami</h2>
+        <p class="muted">App Developer</p>
+        <a class="link" href="mailto:mohammed012.sami@gmail.com">📧 mohammed012.sami@gmail.com</a>
+        <a class="link" href="tel:+8801327768403">📞 +880 1327-768403</a>
+        <h3 class="title" data-i18n="contributors">👥 এই অ্যাপ তৈরিতে আরো যাদের অবদান</h3>
+        <h4>1. Yasin</h4>
+        <h4>2. Mahfouz</h4>
+        <h4>3. Abdullah</h4>
+        <h4>4. Tamim</h4>
+        <h4>5. Emon</h4>
+    </div>
+</div>
+
+<div class="modal" id="devPhotoModal" onclick="this.classList.remove('on')">
+    <div class="modalBox" onclick="event.stopPropagation()">
+        <button class="close" onclick="document.getElementById('devPhotoModal').classList.remove('on')">×</button>
+        <img src="https://cdn.phototourl.com/free/2026-09-08-73636774-0906-49f1-b17d-37054bacc8b1.png">
+    </div>
+</div>
+
+<div class="loader" id="loader" data-i18n="searching">তথ্য খোঁজা হচ্ছে...</div>
+<script>
+// ============================================================
+//  FIREBASE CONFIG
+// ============================================================
+const firebaseConfig = {
+    apiKey: "AIzaSyCyj0N6uU4RAxX92iV71Bo6sgs3b5h9CkQ",
+    authDomain: "asirganj--madrasa.firebaseapp.com",
+    projectId: "asirganj--madrasa",
+    storageBucket: "asirganj--madrasa.firebasestorage.app",
+    messagingSenderId: "166742137300",
+    appId: "1:166742137300:web:ec0b491f72136aad885e41",
+    measurementId: "G-5P5LJL7VDF"
+};
+firebase.initializeApp(firebaseConfig);
+
+// ONESIGNAL
+window.OneSignalDeferred = window.OneSignalDeferred || [];
+OneSignalDeferred.push(async function (OneSignal) {
+    await OneSignal.init({ appId: "6faf1ec3-db42-4375-99b0-1e857ead542e" });
+    setTimeout(function () { OneSignal.Notifications.requestPermission(); }, 3000);
+});
+
+const db = firebase.firestore();
+const students = db.collection('students');
+const notices = db.collection('notices');
+const events = db.collection('events');
+const settings = db.collection('settings');
+const teachersCol = db.collection('teachers');
+
+// ============================================================
+//  LANGUAGE SYSTEM
+// ============================================================
+let lang = localStorage.getItem('appLang') === 'en' ? 'en' : 'bn';
+
+const T = {
+    bn: {
+        madrasaName: 'আছিরগঞ্জ আলিম মাদরাসা',
+        portalSub: 'ডিজিটাল তথ্য ও ফলাফল পোর্টাল',
+        menuMobile: '📱 মোবাইল মোড',
+        menuPc: '🖥️ পিসি মোড',
+        heroText: 'আধুনিক শিক্ষা ও ইসলামী মূল্যবোধের সমন্বয়ে একটি সুন্দর শিক্ষাপ্রতিষ্ঠান।',
+        aiTeacher: 'আছিরগঞ্জ AI শিক্ষক',
+        aiCardDesc: 'মাদরাসার যেকোনো শিক্ষামূলক প্রশ্ন করুন ও সমাধান পান',
+        searchResult: 'রেজাল্ট খুঁজুন',
+        lblClass: 'শ্রেণি',
+        lblExam: 'পরীক্ষার ধরন',
+        lblYear: 'শিক্ষাবর্ষ',
+        sidPh: 'যেমন: 7 অথবা ৭',
+        viewResult: '🔍 রেজাল্ট দেখুন',
+        noticeBoard: '📢 নোটিশ বোর্ড',
+        loading: 'লোড হচ্ছে...',
+        detailNotice: 'বিস্তারিত নোটিশ ও তথ্য',
+        videoTitle: '▶️ মাদ্রাসা ভিডিও',
+        headTeacher: '👤 প্রধান শিক্ষক',
+        headName: 'মাওলানা নুরুল হুদা',
+        headRole: 'প্রধান শিক্ষক, আছিরগঞ্জ আলিম মাদরাসা',
+        back: '← ফিরে যান',
+        aiSub: 'আপনার পড়াশোনার বিশ্বস্ত সহযোগী',
+        aiOff: 'বর্তমানে আছিরগঞ্জ AI শিক্ষক সাময়িকভাবে বন্ধ আছে।',
+        aiWelcome: 'আসসালামু আলাইকুম! 😊<br>আমি আছিরগঞ্জ AI শিক্ষক। মাদরাসার পড়াশোনা বা পাঠ্যক্রম সংক্রান্ত যেকোনো বিষয়ে আমাকে প্রশ্ন করতে পারেন।',
+        aiThinking: '🤔 AI চিন্তা করছে...',
+        aiInputPh: 'আপনার প্রশ্ন এখানে লিখুন...',
+        events: '📅 মাদ্রাসার অনুষ্ঠান',
+        allNotices: '📋 সকল নোটিশ',
+        marksheet: 'পরীক্ষার ফলাফল - Marksheet',
+        studentInfo: 'শিক্ষার্থীর তথ্য',
+        lblName: 'নাম',
+        lblFather: 'পিতার নাম',
+        lblMother: 'মাতার নাম',
+        lblRoll: 'রোল',
+        lblSection: 'শাখা',
+        subjectResult: 'বিষয়ভিত্তিক ফলাফল',
+        thSubject: 'বিষয়',
+        thFull: 'পূর্ণমান',
+        thGot: 'প্রাপ্ত',
+        thGrade: 'গ্রেড',
+        thGP: 'জিপি',
+        totalMarks: 'মোট নম্বর',
+        gpaLbl: 'জিপিএ',
+        resultLbl: 'ফলাফল',
+        classStats: '📊 শ্রেণীর পরিসংখ্যান',
+        passed: 'পাস করেছে',
+        failed: 'ফেল করেছে',
+        totalStudents: 'মোট শিক্ষার্থী:',
+        persons: 'জন',
+        tryAgain: 'আবার চেষ্টা করুন',
+        teacherPageTitle: '📱 Good Word Contact List',
+        teacherSearchPh: 'নাম, পদবি বা নম্বর লিখে খুঁজুন...',
+        teacherBtn: 'শিক্ষকবৃন্দের নাম্বার তালিকা',
+        devInfo: '✓ Developer Info',
+        downloadApp: 'অ্যাপ ডাউনলোড করুন',
+        dlPageTitle: 'অ্যাপ ডাউনলোড',
+        dlPageInfo: 'নিচের লিংকটি কপি করুন, তারপর Chrome বা যেকোনো ব্রাউজারে গিয়ে সার্চ/অ্যাড্রেস বক্সে পেস্ট করে ওপেন করুন এবং অ্যাপটি ডাউনলোড করুন।',
+        dlCopy: 'লিংক কপি করুন',
+        dlCopied: '✅ কপি হয়েছে!',
+        apiTitle: '⚙️ API & Model Settings',
+        apiPassInfo: 'API Key বা মডেল পরিবর্তন করতে আপনার পাসওয়ার্ড দিন।',
+        apiPassLbl: '🔑 পাসওয়ার্ড',
+        apiPassPh: 'পাসওয়ার্ড দিন',
+        apiPassErr: '❌ ভুল পাসওয়ার্ড। আবার চেষ্টা করুন।',
+        apiVerify: '✅ যাচাই করুন',
+        apiSelectInfo: 'API Key এবং মডেল নির্বাচন করুন।',
+        apiKeyPh: 'আপনার API Key দিন',
+        save: '💾 সংরক্ষণ করুন',
+        cancel: 'বাতিল',
+        contributors: '👥 এই অ্যাপ তৈরিতে আরো যাদের অবদান',
+        searching: 'তথ্য খোঁজা হচ্ছে...',
+        noNotice: 'কোনো নোটিশ নেই',
+        noticeLoadErr: 'নোটিশ লোড করতে সমস্যা হয়েছে',
+        noEvent: 'কোনো অনুষ্ঠান নেই',
+        madrasaOpen: 'মাদরাসা খোলা আছে',
+        madrasaClosed: 'মাদরাসা বন্ধ আছে',
+        resNotFoundT: 'রেজাল্ট পাওয়া যায়নি',
+        resNotFoundM: 'আপনার দেওয়া তথ্য দিয়ে কোনো প্রকাশিত রেজাল্ট পাওয়া যায়নি।',
+        serverErrT: 'সার্ভার সমস্যা',
+        serverErrM: 'ডাটাবেস কানেকশনে সমস্যা হচ্ছে।',
+        noTeachers: 'এখনো কোনো শিক্ষকের তথ্য যোগ করা হয়নি।',
+        noContact: 'কোনো যোগাযোগ পাওয়া যায়নি।',
+        noPhone: 'নম্বর পাওয়া যায়নি',
+        callBtn: '📞 কল',
+        devLabel: 'সংস্কারক :',
+        devName: 'মো: ছামি',
+        apologyLabel: 'বিদ্রোহ :',
+        apologyText: 'এটিকে কোন ভুল হলে ক্ষমার দৃষ্টিতে দেখবেন।',
+        apiActive: '✅ API Key সক্রিয় আছে',
+        apiNone: '❌ কোনো API Key নেই',
+        apiMaskedNone: '🔑 কোনো API Key সংরক্ষিত নেই',
+        apiEnterValid: '❌ দয়া করে একটি বৈধ API Key দিন।',
+        apiSaved: '✅ API Key ও মডেল সফলভাবে সংরক্ষিত হয়েছে!',
+        needKey: '⚠️ দয়া করে প্রথমে API Settings থেকে একটি বৈধ API Key সংরক্ষণ করুন। সেটিংস বাটনে (⚙️) ক্লিক করে API Key দিন।',
+        aiSorry: 'দুঃখিত, আমি উত্তর দিতে পারছি না।',
+        aiConnErr: 'দুঃখিত, AI-এর সাথে সংযোগ করতে সমস্যা হচ্ছে। ',
+        aiKeyInvalid: 'আপনার API Key সঠিক নয় বা মেয়াদোত্তীর্ণ। দয়া করে API Settings থেকে নতুন API Key দিন।',
+        aiBothFailed: 'তিনটি AI মডেলই এখন কাজ করছে না। পরে আবার চেষ্টা করুন।',
+        aiTryLater: 'পরে আবার চেষ্টা করুন।',
+        statusPass: 'উত্তীর্ণ',
+        statusFail: 'অনুত্তীর্ণ'
+    },
+    en: {
+        madrasaName: 'Asirganj Alim Madrasa',
+        portalSub: 'Digital Information & Result Portal',
+        menuMobile: '📱 Mobile Mode',
+        menuPc: '🖥️ PC Mode',
+        heroText: 'A beautiful educational institution combining modern education with Islamic values.',
+        aiTeacher: 'Asirganj AI Teacher',
+        aiCardDesc: 'Ask any educational question about the madrasa and get answers',
+        searchResult: 'Search Result',
+        lblClass: 'Class',
+        lblExam: 'Exam Type',
+        lblYear: 'Academic Year',
+        sidPh: 'e.g. 7',
+        viewResult: '🔍 View Result',
+        noticeBoard: '📢 Notice Board',
+        loading: 'Loading...',
+        detailNotice: 'Detailed Notices & Info',
+        videoTitle: '▶️ Madrasa Video',
+        headTeacher: '👤 Head Teacher',
+        headName: 'Maulana Nurul Huda',
+        headRole: 'Head Teacher, Asirganj Alim Madrasa',
+        back: '← Go Back',
+        aiSub: 'Your trusted study companion',
+        aiOff: 'Asirganj AI Teacher is temporarily unavailable.',
+        aiWelcome: 'Assalamu Alaikum! 😊<br>I am the Asirganj AI Teacher. You can ask me anything about madrasa studies or the curriculum.',
+        aiThinking: '🤔 AI is thinking...',
+        aiInputPh: 'Type your question here...',
+        events: '📅 Madrasa Events',
+        allNotices: '📋 All Notices',
+        marksheet: 'Examination Result - Marksheet',
+        studentInfo: 'Student Information',
+        lblName: 'Name',
+        lblFather: "Father's Name",
+        lblMother: "Mother's Name",
+        lblRoll: 'Roll',
+        lblSection: 'Section',
+        subjectResult: 'Subject-wise Result',
+        thSubject: 'Subject',
+        thFull: 'Full Marks',
+        thGot: 'Obtained',
+        thGrade: 'Grade',
+        thGP: 'GP',
+        totalMarks: 'Total Marks',
+        gpaLbl: 'GPA',
+        resultLbl: 'Result',
+        classStats: '📊 Class Statistics',
+        passed: 'Passed',
+        failed: 'Failed',
+        totalStudents: 'Total Students:',
+        persons: '',
+        tryAgain: 'Try Again',
+        teacherPageTitle: '📱 Teachers Contact List',
+        teacherSearchPh: 'Search by name, designation or number...',
+        teacherBtn: 'Teachers Contact List',
+        devInfo: '✓ Developer Info',
+        downloadApp: 'Download App',
+        dlPageTitle: 'Download App',
+        dlPageInfo: 'Copy the link below, then open Chrome or any browser, paste it into the search/address box, open it and download the app.',
+        dlCopy: 'Copy Link',
+        dlCopied: '✅ Copied!',
+        apiTitle: '⚙️ API & Model Settings',
+        apiPassInfo: 'Enter your password to change the API Key or model.',
+        apiPassLbl: '🔑 Password',
+        apiPassPh: 'Enter password',
+        apiPassErr: '❌ Wrong password. Please try again.',
+        apiVerify: '✅ Verify',
+        apiSelectInfo: 'Set the API Key and select models.',
+        apiKeyPh: 'Enter your API Key',
+        save: '💾 Save',
+        cancel: 'Cancel',
+        contributors: '👥 Other contributors to this app',
+        searching: 'Searching...',
+        noNotice: 'No notices',
+        noticeLoadErr: 'Failed to load notices',
+        noEvent: 'No events',
+        madrasaOpen: 'Madrasa is open',
+        madrasaClosed: 'Madrasa is closed',
+        resNotFoundT: 'Result not found',
+        resNotFoundM: 'No published result was found with the information you provided.',
+        serverErrT: 'Server Error',
+        serverErrM: 'There is a problem connecting to the database.',
+        noTeachers: 'No teacher information has been added yet.',
+        noContact: 'No contact found.',
+        noPhone: 'Number not available',
+        callBtn: '📞 Call',
+        devLabel: 'Developer:',
+        devName: 'Md. Sami',
+        apologyLabel: 'Note:',
+        apologyText: 'Please forgive any mistakes in this app.',
+        apiActive: '✅ API Key is active',
+        apiNone: '❌ No API Key',
+        apiMaskedNone: '🔑 No API Key saved',
+        apiEnterValid: '❌ Please enter a valid API Key.',
+        apiSaved: '✅ API Key and models saved successfully!',
+        needKey: '⚠️ Please save a valid API Key from API Settings first. Click the settings button (⚙️) and enter the API Key.',
+        aiSorry: 'Sorry, I am unable to answer.',
+        aiConnErr: 'Sorry, there is a problem connecting to the AI. ',
+        aiKeyInvalid: 'Your API Key is invalid or expired. Please enter a new API Key from API Settings.',
+        aiBothFailed: 'All three AI models are not working right now. Please try again later.',
+        aiTryLater: 'Please try again later.',
+        statusPass: 'Passed',
+        statusFail: 'Failed'
+    }
+};
+
+function tr(key) {
+    return (T[lang] && T[lang][key] !== undefined) ? T[lang][key] : (T.bn[key] !== undefined ? T.bn[key] : key);
+}
+
+const CLASS_LIST = ['১ম','২য়','৩য়','৪র্থ','৫ম','৬ষ্ঠ','৭ম','৮ম','৯ম','১০ম','আলিম ১ম বর্ষ','আলিম ২য় বর্ষ'];
+const CLASS_EN = {
+    '১ম':'Class 1','২য়':'Class 2','৩য়':'Class 3','৪র্থ':'Class 4','৫ম':'Class 5','৬ষ্ঠ':'Class 6',
+    '৭ম':'Class 7','৮ম':'Class 8','৯ম':'Class 9','১০ম':'Class 10',
+    'আলিম ১ম বর্ষ':'Alim 1st Year','আলিম ২য় বর্ষ':'Alim 2nd Year'
+};
+const EXAM_EN = {
+    'Test':'Test','Pre Test':'Pre Test','Year Change':'Year Change',
+    'অর্ধবার্ষিক পরীক্ষা':'Half-Yearly Exam','বার্ষিক পরীক্ষা':'Annual Exam'
+};
+const YEAR_LIST = ['২০২৬','২০২৭','২০২৮','২০২৯','২০৩০'];
+const SUBJECT_LIST_DEFAULT = ['কুরআন মাজীদ','তাজভীদ','আকাইদ','হাদিস','ফিকহ','আরবি','ইসলাম শিক্ষা','ইসলামের ইতিহাস','বাংলা','ইংরেজি','গণিত','বিজ্ঞান','আইসিটি'];
+const SUBJECT_EN = {
+    'কুরআন মাজীদ':'Quran Majeed','তাজভীদ':'Tajweed','আকাইদ':'Aqaid','হাদিস':'Hadith','ফিকহ':'Fiqh',
+    'আরবি':'Arabic','ইসলাম শিক্ষা':'Islamic Studies','ইসলামের ইতিহাস':'History of Islam',
+    'বাংলা':'Bangla','ইংরেজি':'English','গণিত':'Mathematics','বিজ্ঞান':'Science','আইসিটি':'ICT'
+};
+
+function classLabel(v) { return lang === 'en' ? (CLASS_EN[v] || bnToEn(v)) : v; }
+function examLabel(v) { return lang === 'en' ? (EXAM_EN[v] || v) : v; }
+function subjectLabel(v) { return lang === 'en' ? (SUBJECT_EN[v] || bnToEn(v)) : v; }
+
+// ============================================================
+//  UTILITIES (digits are language-aware)
+// ============================================================
+const bn = { '০': '0', '১': '1', '২': '2', '৩': '3', '৪': '4', '৫': '5', '৬': '6', '৭': '7', '৮': '8', '৯': '9' };
+const eb = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+const en = v => (v ?? '').toString().replace(/[০-৯]/g, x => bn[x]);
+const b = v => lang === 'bn'
+    ? (v ?? '').toString().replace(/\d/g, x => eb[x])
+    : en(v);
+
+// ============================================================
+//  BENGALI → ENGLISH (names / designations / subjects)
+// ============================================================
+const WORD_EN = {
+    'মাওলানা':'Maulana','মৌলভী':'Moulvi','মৌলভি':'Moulvi','মুফতি':'Mufti','মুফতী':'Mufti',
+    'হাফেজ':'Hafez','হাফিজ':'Hafiz','হাফেয':'Hafez','ক্বারী':'Qari','কারী':'Qari','কারি':'Qari','ক্বারি':'Qari',
+    'শাইখ':'Shaikh','শায়খ':'Shaikh','আলহাজ্ব':'Alhaj','আলহাজ':'Alhaj','হাজী':'Haji','হাজি':'Haji',
+    'মোঃ':'Md.','মো:':'Md.','মো.':'Md.','মোহাম্মদ':'Mohammad','মুহাম্মদ':'Muhammad','মোহাম্মাদ':'Mohammad','মুহাম্মাদ':'Muhammad',
+    'আব্দুল':'Abdul','আবদুল':'Abdul','আব্দুর':'Abdur','আবদুর':'Abdur','আব্দুল্লাহ':'Abdullah','আবদুল্লাহ':'Abdullah',
+    'মোছাঃ':'Mst.','মোসাঃ':'Mst.','মোছা:':'Mst.','মোসা:':'Mst.','মিসেস':'Mrs.','মিস':'Miss','মোছাম্মৎ':'Mst.',
+    'ছামি':'Sami','সামি':'Sami','নুরুল':'Nurul','নূরুল':'Nurul','হুদা':'Huda','ইসলাম':'Islam','রহমান':'Rahman',
+    'হোসেন':'Hossain','হোসাইন':'Hossain','হুসাইন':'Hussain','আলী':'Ali','আলি':'Ali','আহমদ':'Ahmad','আহমেদ':'Ahmed','আহমাদ':'Ahmad',
+    'উদ্দিন':'Uddin','উদ্দীন':'Uddin','সাহেব':'Sahib','আসাদুল্লাহ':'Asadullah','আশরাফ':'Ashraf','ফারুক':'Faruk',
+    'কামাল':'Kamal','জামাল':'Jamal','হাসান':'Hasan','ইব্রাহিম':'Ibrahim','ইবরাহীম':'Ibrahim',
+    'ইসমাইল':'Ismail','ইউসুফ':'Yusuf','ইউনুস':'Yunus','ওমর':'Omar','উমর':'Umar','ওসমান':'Osman','উসমান':'Usman',
+    'মাহমুদ':'Mahmud','মাসুদ':'Masud','মাসউদ':'Masud','শরীফ':'Sharif','শরিফ':'Sharif','সাইফুল':'Saiful','সাইদুর':'Saidur',
+    'রফিকুল':'Rafiqul','শফিকুল':'Shafiqul','জহিরুল':'Zahirul','মিজানুর':'Mizanur','মোস্তফা':'Mostafa','মুস্তফা':'Mustafa',
+    'শিক্ষক':'Teacher','শিক্ষিকা':'Teacher','সহকারী':'Assistant','সহকারি':'Assistant','সহঃ':'Asst.','সহ:':'Asst.','প্রধান':'Head','সিনিয়র':'Senior','জুনিয়র':'Junior',
+    'অধ্যক্ষ':'Principal','উপাধ্যক্ষ':'Vice Principal','সুপার':'Super','সুপারিনটেনডেন্ট':'Superintendent','প্রভাষক':'Lecturer',
+    'অধ্যাপক':'Professor','কম্পিউটার':'Computer','অফিস':'Office','কর্মচারী':'Staff','পিয়ন':'Peon','আয়া':'Aya',
+    'দপ্তরি':'Office Assistant','নৈশপ্রহরী':'Night Guard','নিরাপত্তা':'Security','প্রহরী':'Guard','কর্মকর্তা':'Officer',
+    'ও':'&','এবং':'&','ইন্সট্রাক্টর':'Instructor','লাইব্রেরিয়ান':'Librarian','হিসাবরক্ষক':'Accountant','কেরানি':'Clerk',
+    'কুরআন':'Quran','কোরআন':'Quran','মাজীদ':'Majeed','মাজিদ':'Majeed','তাজভীদ':'Tajweed','আকাইদ':'Aqaid','আকিদা':'Aqeedah',
+    'হাদিস':'Hadith','ফিকহ':'Fiqh','আরবি':'Arabic','বাংলা':'Bangla','ইংরেজি':'English','গণিত':'Mathematics','বিজ্ঞান':'Science',
+    'আইসিটি':'ICT','সাহিত্য':'Literature','ব্যাকরণ':'Grammar','প্রথম':'1st','দ্বিতীয়':'2nd','পত্র':'Paper','ইতিহাস':'History',
+    'ভূগোল':'Geography','সমাজ':'Society','শিক্ষা':'Studies','নৈতিক':'Moral','ইসলামের':'Islamic','ধর্ম':'Religion','তথ্য':'Information',
+    'প্রযুক্তি':'Technology','পদার্থ':'Physics','রসায়ন':'Chemistry','জীববিজ্ঞান':'Biology','উচ্চতর':'Higher','সাধারণ':'General'
+};
+
+const CONS = {
+    'ক':'k','খ':'kh','গ':'g','ঘ':'gh','ঙ':'ng','চ':'ch','ছ':'chh','জ':'j','ঝ':'jh','ঞ':'n',
+    'ট':'t','ঠ':'th','ড':'d','ঢ':'dh','ণ':'n','ত':'t','থ':'th','দ':'d','ধ':'dh','ন':'n',
+    'প':'p','ফ':'f','ব':'b','ভ':'bh','ম':'m','য':'y','র':'r','ল':'l','শ':'sh','ষ':'sh',
+    'স':'s','হ':'h','ড়':'r','ঢ়':'rh','য়':'y','ৎ':'t'
+};
+const VOWEL_IND = {'অ':'a','আ':'a','ই':'i','ঈ':'i','উ':'u','ঊ':'u','ঋ':'ri','এ':'e','ঐ':'oi','ও':'o','ঔ':'ou'};
+const VOWEL_SIGN = {'া':'a','ি':'i','ী':'i','ু':'u','ূ':'u','ৃ':'ri','ে':'e','ৈ':'oi','ো':'o','ৌ':'ou'};
+const HASANTA = '\u09CD';
+
+function translitWord(w) {
+    w = w.normalize('NFC')
+         .replace(/\u09A1\u09BC/g, '\u09DC')
+         .replace(/\u09A2\u09BC/g, '\u09DD')
+         .replace(/\u09AF\u09BC/g, '\u09DF');
+    let out = '';
+    const chars = Array.from(w);
+    for (let i = 0; i < chars.length; i++) {
+        const ch = chars[i];
+        if (CONS[ch] !== undefined) {
+            out += CONS[ch];
+            const nx = chars[i + 1];
+            if (nx === HASANTA) { i++; continue; }
+            if (nx && VOWEL_SIGN[nx] !== undefined) continue;
+            if (i === chars.length - 1) continue;
+            out += 'a';
+        } else if (VOWEL_IND[ch] !== undefined) {
+            out += VOWEL_IND[ch];
+        } else if (VOWEL_SIGN[ch] !== undefined) {
+            out += VOWEL_SIGN[ch];
+        } else if (ch === 'ং') {
+            out += 'ng';
+        } else if (ch === 'ঃ' || ch === 'ঁ' || ch === '়') {
+            // ignore
+        } else if (/[০-৯]/.test(ch)) {
+            out += bn[ch];
+        } else {
+            out += ch;
+        }
+    }
+    return out;
+}
+
+function cap(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+
+function bnToEn(text) {
+    const src = (text ?? '').toString().trim();
+    if (!src) return '';
+    if (!/[\u0980-\u09FF]/.test(src)) return src;
+    return src.split(/\s+/).map(word => {
+        if (WORD_EN[word] !== undefined) return WORD_EN[word];
+        const stripped = word.replace(/[,।]+$/g, '');
+        if (WORD_EN[stripped] !== undefined) return WORD_EN[stripped];
+        return cap(translitWord(word));
+    }).join(' ');
+}
+
+// ============================================================
+//  APPLY LANGUAGE
+// ============================================================
+function applyStaticText() {
+    document.documentElement.lang = lang;
+    document.title = tr('madrasaName');
+    document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = tr(el.getAttribute('data-i18n')); });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => { el.innerHTML = tr(el.getAttribute('data-i18n-html')); });
+    document.querySelectorAll('[data-i18n-ph]').forEach(el => { el.placeholder = tr(el.getAttribute('data-i18n-ph')); });
+    document.getElementById('menuEn').classList.toggle('active', lang === 'en');
+    document.getElementById('menuBn').classList.toggle('active', lang === 'bn');
+    document.getElementById('menuMobile').classList.toggle('active', !document.body.classList.contains('pc'));
+    document.getElementById('menuPc').classList.toggle('active', document.body.classList.contains('pc'));
+}
+
+function setLang(l) {
+    lang = (l === 'en') ? 'en' : 'bn';
+    localStorage.setItem('appLang', lang);
+    document.getElementById('menu').style.display = 'none';
+    applyLang();
+}
+
+function applyLang() {
+    applyStaticText();
+    buildClassSelect();
+    updateExamOptions();
+    buildYearSelect();
+    buildAISelects();
+    renderHomeNotices();
+    renderNoticePage();
+    renderResult();
+    renderStats();
+    renderTeacherList(document.getElementById('teacherSearch').value);
+    refreshAPIStatusTexts();
+}
+
+function buildClassSelect() {
+    const sel = document.getElementById('class');
+    const cur = sel.value || '১০ম';
+    sel.innerHTML = CLASS_LIST.map(v => `<option value="${v}">${classLabel(v)}</option>`).join('');
+    sel.value = CLASS_LIST.includes(cur) ? cur : '১০ম';
+}
+
+function updateExamOptions() {
+    const cls = document.getElementById('class').value;
+    const examSelect = document.getElementById('exam');
+    const cur = examSelect.value;
+    let opts = [];
+    if (cls === '১০ম') opts = ['Test', 'Pre Test'];
+    else if (cls === 'আলিম ১ম বর্ষ') opts = ['Year Change', 'অর্ধবার্ষিক পরীক্ষা'];
+    else opts = ['বার্ষিক পরীক্ষা', 'অর্ধবার্ষিক পরীক্ষা'];
+    examSelect.innerHTML = opts.map(o => `<option value="${o}">${examLabel(o)}</option>`).join('');
+    if (opts.includes(cur)) examSelect.value = cur;
+}
+
+function buildYearSelect() {
+    const sel = document.getElementById('year');
+    const cur = sel.value || YEAR_LIST[0];
+    sel.innerHTML = YEAR_LIST.map(v => `<option value="${v}">${lang === 'en' ? en(v) : v}</option>`).join('');
+    sel.value = YEAR_LIST.includes(cur) ? cur : YEAR_LIST[0];
+}
+
+let aiSubjectValues = SUBJECT_LIST_DEFAULT.slice();
+let aiClassValues = CLASS_LIST.slice();
+
+function buildAISelects() {
+    const subSel = document.getElementById('aiSubjectSelect');
+    const clsSel = document.getElementById('aiClassSelect');
+    const curSub = subSel.value;
+    const curCls = clsSel.value || '১০ম';
+    subSel.innerHTML = aiSubjectValues.map(s => `<option value="${escapeHTML(s)}">${escapeHTML(subjectLabel(s))}</option>`).join('');
+    clsSel.innerHTML = aiClassValues.map(c => `<option value="${escapeHTML(c)}">${escapeHTML(classLabel(c))}</option>`).join('');
+    if (aiSubjectValues.includes(curSub)) subSel.value = curSub;
+    if (aiClassValues.includes(curCls)) clsSel.value = curCls;
+}
+
+// ============================================================
+//  PAGE / MENU / MODE
+// ============================================================
+function show(id) {
+    document.querySelectorAll('.page').forEach(x => x.classList.remove('on'));
+    document.getElementById(id).classList.add('on');
+    const footer = document.getElementById('mainFooter');
+    if (footer) footer.style.display = (id === 'home') ? '' : 'none';
+    scrollTo(0, 0);
+}
+
+function toggleMenu() {
+    const m = document.getElementById('menu');
+    m.style.display = m.style.display === 'block' ? 'none' : 'block';
+}
+document.addEventListener('click', function (e) {
+    const menu = document.getElementById('menu');
+    if (menu && !e.target.closest('.top')) menu.style.display = 'none';
+});
+
+function mode(m) {
+    document.body.classList.toggle('pc', m === 'pc');
+    localStorage.view = m;
+    document.getElementById('menu').style.display = 'none';
+    const mb = document.getElementById('menuMobile');
+    const pc = document.getElementById('menuPc');
+    if (mb && pc) {
+        mb.classList.toggle('active', m !== 'pc');
+        pc.classList.toggle('active', m === 'pc');
+    }
+}
+mode(localStorage.view || 'mobile');
+
+function toggleDarkMode() {
+    const isDark = document.body.classList.toggle('dark');
+    localStorage.darkMode = isDark ? '1' : '0';
+    document.getElementById('darkModeIcon').textContent = isDark ? 'light_mode' : 'dark_mode';
+}
+if (localStorage.darkMode === '1') document.body.classList.add('dark');
+document.getElementById('darkModeIcon').textContent = document.body.classList.contains('dark') ? 'light_mode' : 'dark_mode';
+
+function openDevPhoto() { document.getElementById('devPhotoModal').classList.add('on'); }
+
+function showMessage(titleKey, textKey) {
+    const t = document.getElementById('msgTitle');
+    const x = document.getElementById('msgText');
+    t.setAttribute('data-i18n', titleKey);
+    x.setAttribute('data-i18n', textKey);
+    t.textContent = tr(titleKey);
+    x.textContent = tr(textKey);
+    show('message');
+}
+
+function grade(m, f) {
+    let p = (m / f) * 100;
+    if (p >= 80) return ['A+', 5];
+    if (p >= 70) return ['A', 4];
+    if (p >= 60) return ['A-', 3.5];
+    if (p >= 50) return ['B', 3];
+    if (p >= 40) return ['C', 2];
+    if (p >= 33) return ['D', 1];
+    return ['F', 0];
+}
+
+function dateLocale() { return lang === 'en' ? 'en-GB' : 'bn-BD'; }
+
+// ============================================================
+//  NOTICES (Home)
+// ============================================================
+let homeNoticesCache = null;
+
+async function loadNotices() {
+    try {
+        const snap = await notices.orderBy('date', 'desc').limit(5).get();
+        homeNoticesCache = [];
+        snap.forEach(d => homeNoticesCache.push(d.data()));
+    } catch (e) {
+        homeNoticesCache = 'ERR';
+    }
+    renderHomeNotices();
+}
+
+function renderHomeNotices() {
+    const box = document.getElementById('notices');
+    if (homeNoticesCache === null) return;
+    box.removeAttribute('data-i18n');
+    if (homeNoticesCache === 'ERR') { box.textContent = tr('noticeLoadErr'); return; }
+    let html = '';
+    homeNoticesCache.forEach(n => {
+        const dt = n.date?.seconds ? new Date(n.date.seconds * 1000).toLocaleDateString(dateLocale()) : '';
+        html += `<div class="notice"><div class="date">📅 ${dt}</div>${n.title || ''}</div>`;
+    });
+    box.innerHTML = html || `<p class="muted">${tr('noNotice')}</p>`;
+}
+
+// ============================================================
+//  NOTICES PAGE
+// ============================================================
+let noticePageCache = null;
+
+async function openNotices() {
+    show('noticePage');
+    try {
+        const snapNot = await notices.orderBy('date', 'desc').get();
+        const nList = [];
+        snapNot.forEach(d => nList.push(d.data()));
+        const snapEv = await events.orderBy('date', 'asc').get();
+        const eList = [];
+        snapEv.forEach(d => eList.push(d.data()));
+        const st = await settings.doc('madrasaStatus').get();
+        noticePageCache = { notices: nList, events: eList, status: st.exists ? st.data() : null };
+        renderNoticePage();
+    } catch (e) { console.error(e); }
+}
+
+function renderNoticePage() {
+    if (!noticePageCache) return;
+    const c = noticePageCache;
+    const allBox = document.getElementById('allNotices');
+    const evBox = document.getElementById('events');
+    allBox.removeAttribute('data-i18n');
+    evBox.removeAttribute('data-i18n');
+
+    let notHtml = '';
+    c.notices.forEach(n => {
+        notHtml += `<div class="event"><h4>${n.title || ''}</h4><p class="muted">${n.details || ''}</p></div>`;
+    });
+    allBox.innerHTML = notHtml || tr('noNotice');
+
+    let evHtml = '';
+    c.events.forEach(x => {
+        evHtml += `<div class="event"><h4>${x.name || ''}</h4>
+            <p class="muted">📅 ${b(x.date || '')} 🕒 ${b(x.time || '')}</p>
+            <p class="muted">${x.details || ''}</p></div>`;
+    });
+    evBox.innerHTML = evHtml || tr('noEvent');
+
+    if (c.status) {
+        const isOpen = c.status.isOpen === true;
+        document.getElementById('status').innerHTML = `
+            <div class="status ${isOpen ? 'open' : 'closed'}">
+                <b>${isOpen ? tr('madrasaOpen') : tr('madrasaClosed')}</b>
+                <p>${c.status.reason || ''}</p>
+            </div>`;
+    }
+}
+
+// ============================================================
+//  CLASS STATS
+// ============================================================
+let lastStats = null;
+
+async function stats(c, ex, y) {
+    try {
+        const snap = await students
+            .where('class', '==', c)
+            .where('exam', '==', ex)
+            .where('academic_year', '==', y)
+            .where('published', '==', true)
+            .get();
+        const total = snap.size;
+        let pass = 0;
+        snap.forEach(d => { if (d.data().status === 'উত্তীর্ণ') pass++; });
+        lastStats = { total, pass, fail: total - pass };
+        renderStats();
+    } catch (e) { console.error(e); }
+}
+
+function renderStats() {
+    if (!lastStats) return;
+    const { total, pass, fail } = lastStats;
+    const sfx = lang === 'bn' ? ' জন' : '';
+    document.getElementById('pass').textContent = b(pass) + sfx;
+    document.getElementById('fail').textContent = b(fail) + sfx;
+    document.getElementById('all').textContent = b(total);
+    document.getElementById('passPct').textContent = total ? b((pass / total * 100).toFixed(1)) + '%' : b('0') + '%';
+    document.getElementById('failPct').textContent = total ? b((fail / total * 100).toFixed(1)) + '%' : b('0') + '%';
+}
+
+// ============================================================
+//  SEARCH RESULT
+// ============================================================
+let lastResult = null;
+
+document.getElementById('searchForm').onsubmit = async e => {
+    e.preventDefault();
+    document.getElementById('loader').style.display = 'grid';
+    const ex = document.getElementById('exam').value;
+    const y = document.getElementById('year').value;
+    const c = document.getElementById('class').value;
+    const rawId = document.getElementById('sid').value.trim();
+    const id = en(rawId);
+
+    try {
+        let query = await students
+            .where('exam', '==', ex)
+            .where('academic_year', '==', y)
+            .where('class', '==', c)
+            .where('student_id_en', '==', id)
+            .where('published', '==', true)
+            .get();
+
+        if (query.empty) {
+            query = await students
+                .where('exam', '==', ex)
+                .where('academic_year', '==', y)
+                .where('class', '==', c)
+                .where('student_id', '==', rawId)
+                .where('published', '==', true)
+                .get();
+        }
+
+        if (query.empty) {
+            document.getElementById('loader').style.display = 'none';
+            showMessage('resNotFoundT', 'resNotFoundM');
+            return;
+        }
+
+        const d = query.docs[0].data();
+        lastResult = { d, ex, y, c, rawId };
+        renderResult();
+
+        await stats(d.class || c, d.exam || ex, d.academic_year || y);
+
+        document.getElementById('loader').style.display = 'none';
+        show('result');
+
+    } catch (err) {
+        console.error(err);
+        document.getElementById('loader').style.display = 'none';
+        showMessage('serverErrT', 'serverErrM');
+    }
+};
+
+function renderResult() {
+    if (!lastResult) return;
+    const { d, ex, y, c, rawId } = lastResult;
+    const subs = d.subjects || [];
+    let totalMarks = 0, totalFull = 0, totalGP = 0, hasFail = false;
+
+    document.getElementById('examOut').textContent = examLabel(d.exam || ex) + ' • ' + b(d.academic_year || y);
+    document.getElementById('name').textContent = d.name || '-';
+    document.getElementById('idOut').textContent = b(d.student_id || rawId);
+    document.getElementById('father').textContent = d.father_name || '-';
+    document.getElementById('mother').textContent = d.mother_name || '-';
+    document.getElementById('classOut').textContent = classLabel(d.class || c);
+    document.getElementById('roll').textContent = b(d.roll_no || '-');
+    document.getElementById('section').textContent = d.section || '-';
+
+    let rows = '';
+    subs.forEach(s => {
+        const m = parseInt(en(s.marks)) || 0;
+        const fm = parseInt(en(s.full_marks)) || 100;
+        const g = grade(m, fm);
+        const gr = s.grade || g[0];
+        const point = parseFloat(s.grade_point ?? g[1]);
+        totalMarks += m;
+        totalFull += fm;
+        totalGP += point;
+        if (gr === 'F') hasFail = true;
+        rows += `<tr><td>${escapeHTML(subjectLabel(s.name || ''))}</td><td>${b(fm)}</td><td>${b(m)}</td>
+                 <td><span class="pill">${gr}</span></td><td>${b(point.toFixed(2))}</td></tr>`;
+    });
+    document.getElementById('subjects').innerHTML = rows;
+
+    document.getElementById('total').textContent = b(totalMarks) + ' / ' + b(totalFull);
+    const gpaValue = d.gpa || (hasFail ? '0.00' : subs.length ? (totalGP / subs.length).toFixed(2) : '0.00');
+    document.getElementById('gpa').textContent = b(gpaValue);
+    let statusText = d.status || (hasFail ? 'অনুত্তীর্ণ' : 'উত্তীর্ণ');
+    if (lang === 'en') {
+        if (statusText === 'উত্তীর্ণ') statusText = tr('statusPass');
+        else if (statusText === 'অনুত্তীর্ণ') statusText = tr('statusFail');
+    }
+    document.getElementById('resultStatus').textContent = statusText;
+    document.getElementById('summary').style.background = hasFail ? 'var(--red)' : 'var(--g)';
+}
+
+// ============================================================
+//  TEACHER CONTACT LIST
+// ============================================================
+let allTeachersCache = [];
+let teachersLoaded = false;
+
+function escapeHTML(text) {
+    return String(text ?? '')
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function getDesignation(t) {
+    return (t.designation || t.post || t.position || t.role || t.title || t['পদবি'] || '').toString().trim();
+}
+function getDesignationEn(t) {
+    const e = (t.designation_en || t.designationEn || t.post_en || t.position_en || '').toString().trim();
+    return e || bnToEn(getDesignation(t));
+}
+function getNameEn(t) {
+    const e = (t.name_en || t.nameEn || t.english_name || t.nameEnglish || t.en_name || '').toString().trim();
+    return e || bnToEn(t.name || '');
+}
+
+async function openTeacherContacts() {
+    show('teacherContactPage');
+    document.getElementById('teacherSearch').value = '';
+    if (!teachersLoaded) {
+        document.getElementById('teacherListContainer').innerHTML = `<div class="gw-no-result">${tr('loading')}</div>`;
+        await loadTeachers();
+    }
+    renderTeacherList('');
+}
+
+async function loadTeachers() {
+    try {
+        const snap = await teachersCol.orderBy('name').get();
+        allTeachersCache = [];
+        snap.forEach(d => allTeachersCache.push({ id: d.id, ...d.data() }));
+        teachersLoaded = true;
+    } catch (e) {
+        console.error('Teacher load error:', e);
+        try {
+            const snap2 = await teachersCol.get();
+            allTeachersCache = [];
+            snap2.forEach(d => allTeachersCache.push({ id: d.id, ...d.data() }));
+            allTeachersCache.sort((a, b2) => (a.name || '').localeCompare(b2.name || '', 'bn'));
+            teachersLoaded = true;
+        } catch (e2) {
+            console.error('Teacher fallback load error:', e2);
+        }
+    }
+}
+
+function renderTeacherList(filter = '') {
+    const container = document.getElementById('teacherListContainer');
+    filter = (filter || '').trim();
+
+    if (filter === '369') {
+        container.innerHTML = `
+            <div class="gw-special-message">
+                <b>${tr('devLabel')}</b> ${tr('devName')}<br>
+                <b>${tr('apologyLabel')}</b> ${tr('apologyText')}
+            </div>`;
+        return;
+    }
+
+    if (!teachersLoaded) return;
+
+    const f = filter.toLowerCase();
+    const results = allTeachersCache.filter(t => {
+        const name = (t.name || '').toLowerCase();
+        const nameEn = getNameEn(t).toLowerCase();
+        const phone = (t.phone || '').toString();
+        const desig = getDesignation(t).toLowerCase();
+        const desigEn = getDesignationEn(t).toLowerCase();
+        return name.includes(f) || nameEn.includes(f) || phone.includes(filter) || desig.includes(f) || desigEn.includes(f);
+    });
+
+    if (!allTeachersCache.length) {
+        container.innerHTML = `<div class="gw-no-result">${tr('noTeachers')}</div>`;
+        return;
+    }
+    if (!results.length) {
+        container.innerHTML = `<div class="gw-no-result">${tr('noContact')}</div>`;
+        return;
+    }
+
+    container.innerHTML = results.map(t => {
+        const phoneRaw = (t.phone || '').toString().trim();
+        const phone = en(phoneRaw);
+        const validPhone = /^[0-9]+$/.test(phone);
+        const nameEn = getNameEn(t);
+        const desig = lang === 'en' ? getDesignationEn(t) : getDesignation(t);
+        const mainName = lang === 'en' ? nameEn : (t.name || '');
+        const subName = lang === 'en' ? '' : nameEn;
+        return `
+        <div class="gw-contact">
+            <div class="gw-contact-info">
+                <h3>${escapeHTML(mainName)}</h3>
+                ${subName && subName !== mainName ? `<span class="gw-name-en">${escapeHTML(subName)}</span>` : ''}
+                ${desig ? `<span class="gw-designation">${escapeHTML(desig)}</span>` : ''}
+                <p>${escapeHTML(phoneRaw ? b(phoneRaw) : tr('noPhone'))}</p>
+            </div>
+            ${validPhone
+                ? `<button class="gw-call-btn" onclick="window.location.href='tel:${phone}'">${tr('callBtn')}</button>`
+                : `<button class="gw-call-btn disabled" disabled>${tr('callBtn')}</button>`}
+        </div>`;
+    }).join('');
+}
+
+// ============================================================
+//  API KEY & MODEL PREFERENCES
+// ============================================================
+const API_PASSWORD = '369123';
+const API_KEY_STORAGE = 'asirganj_ai_api_key';
+const MODEL_PREF_STORAGE = 'asirganj_ai_model_pref';
+const DEFAULT_API_KEY = 'AQ.Ab8RN6LU-MAMGmbA30sEuMjbKy5MBgo2sfV8lIGEyA_XNvjQKg';
+
+const MODEL_MAP = {
+    'gemini-3.8-flash': 'gemini-3.8-flash',
+    'gemini-3.5-flash-lite': 'gemini-3.5-flash-lite',
+    'gemini-3.7-flash': 'gemini-3.7-flash'
+};
+
+function getStoredAPIKey() { return localStorage.getItem(API_KEY_STORAGE) || DEFAULT_API_KEY; }
+function setStoredAPIKey(key) { localStorage.setItem(API_KEY_STORAGE, key.trim()); }
+
+function getModelPreferences() {
+    try {
+        const raw = localStorage.getItem(MODEL_PREF_STORAGE);
+        if (raw) return JSON.parse(raw);
+    } catch (e) {}
+    return { primary: 'gemini-3.8-flash', backup: 'gemini-3.7-flash' };
+}
+function setModelPreferences(pref) { localStorage.setItem(MODEL_PREF_STORAGE, JSON.stringify(pref)); }
+function getActualModelId(n) { return MODEL_MAP[n] || 'gemini-3.8-flash'; }
+function hasAPIKey() { return getStoredAPIKey().length > 0; }
+
+function maskKey(k) { return k.substring(0, 4) + '••••••••' + k.substring(k.length - 4); }
+
+function refreshAPIStatusTexts() {
+    const currentKey = getStoredAPIKey();
+    if (currentKey) {
+        document.getElementById('apiKeyMaskedDisplay').textContent = '🔑 ' + maskKey(currentKey);
+        document.getElementById('apiStatusBox').className = 'api-status active';
+        document.getElementById('apiStatusBox').textContent = tr('apiActive');
+    } else {
+        document.getElementById('apiKeyMaskedDisplay').textContent = tr('apiMaskedNone');
+        document.getElementById('apiStatusBox').className = 'api-status inactive';
+        document.getElementById('apiStatusBox').textContent = tr('apiNone');
+    }
+}
+
+function openAPISettings() {
+    document.getElementById('apiSettingsModal').classList.add('on');
+    document.getElementById('apiPasswordStep').style.display = 'block';
+    document.getElementById('apiKeyStep').style.display = 'none';
+    document.getElementById('apiPassword').value = '';
+    document.getElementById('apiPassError').style.display = 'none';
+    document.getElementById('apiSaveMsg').style.display = 'none';
+    refreshAPIStatusTexts();
+    document.getElementById('apiKeyInput').value = getStoredAPIKey() || '';
+    const prefs = getModelPreferences();
+    document.getElementById('primaryModelSelect').value = prefs.primary || 'gemini-3.8-flash';
+    document.getElementById('backupModelSelect').value = prefs.backup || 'gemini-3.7-flash';
+}
+
+function closeAPISettings() { document.getElementById('apiSettingsModal').classList.remove('on'); }
+
+function closeAPISettingsOutside(e) {
+    if (e.target === document.getElementById('apiSettingsModal')) closeAPISettings();
+}
+
+function verifyAPIPassword() {
+    const pass = document.getElementById('apiPassword').value.trim();
+    if (pass === API_PASSWORD) {
+        document.getElementById('apiPassError').style.display = 'none';
+        document.getElementById('apiPasswordStep').style.display = 'none';
+        document.getElementById('apiKeyStep').style.display = 'block';
+        refreshAPIStatusTexts();
+        document.getElementById('apiKeyInput').value = getStoredAPIKey() || '';
+        const prefs = getModelPreferences();
+        document.getElementById('primaryModelSelect').value = prefs.primary || 'gemini-3.8-flash';
+        document.getElementById('backupModelSelect').value = prefs.backup || 'gemini-3.7-flash';
+    } else {
+        document.getElementById('apiPassError').style.display = 'block';
+    }
+}
+
+function saveAPISettings() {
+    const key = document.getElementById('apiKeyInput').value.trim();
+    const msg = document.getElementById('apiSaveMsg');
+    if (!key) {
+        msg.style.display = 'block';
+        msg.style.color = 'var(--red)';
+        msg.textContent = tr('apiEnterValid');
+        return;
+    }
+    const primary = document.getElementById('primaryModelSelect').value;
+    const backup = document.getElementById('backupModelSelect').value;
+    setStoredAPIKey(key);
+    setModelPreferences({ primary, backup });
+    msg.style.display = 'block';
+    msg.style.color = 'var(--g)';
+    msg.textContent = tr('apiSaved');
+    refreshAPIStatusTexts();
+    setTimeout(closeAPISettings, 1500);
+}
+
+// ============================================================
+//  AI CHAT
+// ============================================================
+let aiConfig = { enabled: true, customInstruction: "", allowedSubjects: [], allowedClasses: [] };
+let cachedAdminInstructions = "";
+let lastInstructionFetch = 0;
+const INSTRUCTION_CACHE_TTL = 60000;
+
+async function fetchAdminInstructions() {
+    const now = Date.now();
+    if (now - lastInstructionFetch < INSTRUCTION_CACHE_TTL && cachedAdminInstructions) return cachedAdminInstructions;
+    try {
+        const doc = await db.collection('ai_settings').doc('instructions').get();
+        cachedAdminInstructions = doc.exists ? (doc.data().content || '') : '';
+        lastInstructionFetch = now;
+        return cachedAdminInstructions;
+    } catch (e) {
+        console.warn('Failed to fetch ai_settings/instructions:', e);
+        return cachedAdminInstructions;
+    }
+}
+
+const APP_KNOWLEDGE = `
+এই অ্যাপটি "আছিরগঞ্জ আলিম মাদরাসা" এর ডিজিটাল তথ্য ও ফলাফল পোর্টাল।
+অ্যাপের প্রধান ফিচারসমূহ:
+1. রেজাল্ট খোঁজা: শিক্ষার্থীরা তাদের পরীক্ষার ফলাফল দেখতে পারে। Student ID বা Roll Number দিয়ে খুঁজতে হয়।
+2. নোটিশ বোর্ড: মাদ্রাসার সকল নোটিশ ও ঘোষণা দেখায়।
+3. ভিডিও: মাদ্রাসার কার্যক্রমের ভিডিও দেখার সুযোগ।
+4. প্রধান শিক্ষকের তথ্য: যোগাযোগের তথ্য রয়েছে।
+5. AI শিক্ষক: যেকোনো শিক্ষামূলক প্রশ্নের উত্তর দিতে পারে।
+6. অনুষ্ঠান: মাদ্রাসার বিভিন্ন অনুষ্ঠানের সময়সূচী দেখা যায়।
+7. শ্রেণি পরিসংখ্যান: প্রতিটি শ্রেণির পাস-ফেলের পরিসংখ্যান দেখায়।
+8. শিক্ষকবৃন্দের যোগাযোগ তালিকা: ফুটারের বাটনে ক্লিক করে মাদ্রাসার সকল শিক্ষকের নাম, পদবি ও মোবাইল নম্বর দেখা যায়।
+9. ভাষা পরিবর্তন: উপরের থ্রি ডট মেনু থেকে মোবাইল মোড, পিসি মোড, ইংলিশ মোড ও বাংলা মোড বেছে নেওয়া যায়।
+রেজাল্ট খোঁজার জন্য: হোম পেজে "রেজাল্ট খুঁজুন" সেকশনে পরীক্ষার ধরন, শিক্ষাবর্ষ, শ্রেণি এবং Student ID দিয়ে খুঁজতে হয়।
+নোটিশ দেখার জন্য: হোম পেজের "নোটিশ বোর্ড" থেকে বিস্তারিত দেখুন বাটনে ক্লিক করুন।
+AI শিক্ষক ব্যবহার করতে: হোম পেজে "আছিরগঞ্জ AI শিক্ষক" কার্ডে ক্লিক করুন।
+`;
+
+const DEVELOPER_INFO = `
+অ্যাপ ডেভেলপার: মোঃ ছামি (Md Sami)
+ইমেইল: mohammed012.sami@gmail.com
+ফোন: +880 1327-768403
+এই অ্যাপ তৈরিতে আরও যাদের অবদান আছে: Mahfouz, Abdullah, Tamim
+`;
+
+async function openAIChat() {
+    show('aiChatPage');
+    document.getElementById('loader').style.display = 'grid';
+    try {
+        const doc = await settings.doc('aiSettings').get();
+        if (doc.exists) {
+            aiConfig = doc.data();
+            const off = aiConfig.enabled === false;
+            document.getElementById('aiBanner').style.display = off ? 'block' : 'none';
+            document.getElementById('aiInput').disabled = off;
+            document.getElementById('aiSendBtn').disabled = off;
+            document.getElementById('aiSubjectSelect').disabled = off;
+            document.getElementById('aiClassSelect').disabled = off;
+            if (aiConfig.allowedSubjects && aiConfig.allowedSubjects.length > 0) aiSubjectValues = aiConfig.allowedSubjects.slice();
+            if (aiConfig.allowedClasses && aiConfig.allowedClasses.length > 0) aiClassValues = aiConfig.allowedClasses.slice();
+            buildAISelects();
+        }
+        await fetchAdminInstructions();
+    } catch (e) {
+        console.error('AI Settings fetch error:', e);
+    }
+    document.getElementById('loader').style.display = 'none';
+}
+
+function handleAIEnter(e) { if (e.key === 'Enter') sendAIMessage(); }
+
+function addChatMessage(text, sender) {
+    const body = document.getElementById('chatBody');
+    const div = document.createElement('div');
+    div.className = `msg-bubble msg-${sender}`;
+    div.innerHTML = text.replace(/\n/g, '<br>');
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+}
+
+async function callGemini(uiModelName, apiKey, systemPrompt, userText) {
+    const actualModel = getActualModelId(uiModelName);
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${actualModel}:generateContent?key=${apiKey}`;
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            contents: [{ parts: [{ text: systemPrompt + '\n\nUser প্রশ্ন: ' + userText }] }],
+            generationConfig: { temperature: 0.7, maxOutputTokens: 800, topP: 0.9 }
+        })
+    });
+
+    if (!response.ok) {
+        const errText = await response.text();
+        console.error(`API Error (${uiModelName} → ${actualModel}):`, errText);
+        if (response.status === 403 || response.status === 401) throw new Error('API_KEY_INVALID');
+        throw new Error('API_REQUEST_FAILED');
+    }
+
+    const data = await response.json();
+    let reply = tr('aiSorry');
+    if (data.candidates && data.candidates.length > 0) {
+        const candidate = data.candidates[0];
+        if (candidate.content && candidate.content.parts && candidate.content.parts.length > 0) {
+            reply = candidate.content.parts[0].text || reply;
+        }
+    }
+    return reply;
+}
+
+async function sendAIMessage() {
+    const inputField = document.getElementById('aiInput');
+    const text = inputField.value.trim();
+    if (!text) return;
+
+    const apiKey = getStoredAPIKey();
+    if (!apiKey) {
+        addChatMessage(tr('needKey'), 'ai');
+        inputField.value = '';
+        return;
+    }
+
+    const subj = document.getElementById('aiSubjectSelect').value;
+    const cls = document.getElementById('aiClassSelect').value;
+    const prefs = getModelPreferences();
+    const primaryModel = prefs.primary || 'gemini-3.8-flash';
+    const backupModel = prefs.backup || 'gemini-3.7-flash';
+
+    addChatMessage(text, 'user');
+    inputField.value = '';
+
+    const typing = document.getElementById('typingIndicator');
+    typing.style.display = 'block';
+    document.getElementById('chatBody').scrollTop = document.getElementById('chatBody').scrollHeight;
+
+    try {
+        const adminInstructions = await fetchAdminInstructions();
+
+        const langRule = lang === 'en'
+            ? 'The app is currently in ENGLISH mode. Always reply in clear, simple English (use Arabic/Bengali terms only when necessary, with English explanation).'
+            : 'অ্যাপটি এখন বাংলা মোডে আছে। সবসময় সহজ বাংলা ভাষায় উত্তর দেবে।';
+
+        let systemPrompt = `তুমি "আছিরগঞ্জ আলিম মাদরাসা" এর AI শিক্ষক। তোমার উত্তর দেওয়ার নিয়মগুলো Priority অনুযায়ী অনুসরণ করবে:
+
+=== LANGUAGE RULE ===
+${langRule}
+
+=== PRIORITY 0: পরিচয় সংক্রান্ত প্রশ্ন ===
+যদি ব্যবহারকারী জিজ্ঞেস করে তোমাকে কে বানিয়েছে, তোমার নির্মাতা কে, ডেভেলপার কে, বা এই অ্যাপ কে বানিয়েছে — তাহলে অবশ্যই বলবে যে "মোঃ ছামি তার কোডিং দক্ষতা দিয়ে আমাকে বানিয়েছে।" (ইংরেজি মোডে: "Md. Sami built me with his coding skills.") এবং প্রয়োজনে নিচের ডেভেলপার তথ্যও উল্লেখ করবে:
+${DEVELOPER_INFO}
+
+=== PRIORITY 1: ADMIN INSTRUCTIONS ===
+নিচে মাদ্রাসা কর্তৃপক্ষের দেওয়া বিশেষ নির্দেশনা দেওয়া হলো। এই নির্দেশনাগুলো গুরুত্বপূর্ণ। যদি ব্যবহারকারীর প্রশ্ন এই নির্দেশনার সাথে সম্পর্কিত হয়, তাহলে অবশ্যই এই তথ্য ব্যবহার করে উত্তর দেবে।
+${adminInstructions ? adminInstructions : '(কোনো বিশেষ নির্দেশনা নেই)'}
+
+=== PRIORITY 2: APP FEATURES & INFORMATION ===
+এই অ্যাপ সম্পর্কে ব্যবহারকারী যদি কোনো প্রশ্ন করে, তাহলে নিচের তথ্য ব্যবহার করে উত্তর দেবে:
+${APP_KNOWLEDGE}
+
+=== PRIORITY 3: ACADEMIC KNOWLEDGE ===
+ব্যবহারকারী যদি মাদ্রাসার পড়াশোনা বা শিক্ষাসংক্রান্ত প্রশ্ন করে (যেমন: কুরআন, হাদিস, ফিকহ, আকিদা, আরবি, বাংলা, গণিত, বিজ্ঞান, ইত্যাদি), তাহলে তোমার নিজের জ্ঞান ব্যবহার করে সঠিক ও সহজ ভাষায় উত্তর দেবে।
+
+=== অতিরিক্ত নির্দেশনা ===
+- উত্তর সবসময় সহজ, পরিষ্কার এবং শিক্ষার্থীবান্ধব ভাষায় দেবে।
+- গণিতের প্রশ্ন হলে ধাপে ধাপে সমাধান দেখাবে।
+- ধর্মীয় প্রশ্নের ক্ষেত্রে সম্মানজনক ও সতর্ক ভাষা ব্যবহার করবে।
+- যদি কোনো প্রশ্নের উত্তর না জানো, তাহলে স্পষ্টভাবে বলে দেবে।
+- এই Priority-গুলো অনুসরণ করাই তোমার প্রধান দায়িত্ব।
+- Admin custom instruction: ${aiConfig.customInstruction || ''}
+- বর্তমান বিষয়: ${subj}, শ্রেণি: ${cls}
+`;
+
+        // তিনটি মডেলই কাজ করবে: Primary → Backup → বাকি মডেল
+        const ALL_MODELS = ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash-lite'];
+        const chain = [primaryModel, backupModel, ...ALL_MODELS].filter((m, i, arr) => arr.indexOf(m) === i);
+
+        let reply = null;
+        let keyInvalidCount = 0;
+        for (const model of chain) {
+            try {
+                reply = await callGemini(model, apiKey, systemPrompt, text);
+                break;
+            } catch (err) {
+                console.warn(model + ' failed, trying next model:', err);
+                if (err.message === 'API_KEY_INVALID') keyInvalidCount++;
+            }
+        }
+        if (reply === null) {
+            throw new Error(keyInvalidCount === chain.length ? 'API_KEY_INVALID' : 'BOTH_MODELS_FAILED');
+        }
+
+        typing.style.display = 'none';
+        addChatMessage(reply || tr('aiSorry'), 'ai');
+
+    } catch (error) {
+        typing.style.display = 'none';
+        console.error('AI Error:', error);
+        let errorMsg = tr('aiConnErr');
+        if (error.message === 'API_KEY_INVALID') errorMsg += tr('aiKeyInvalid');
+        else if (error.message === 'BOTH_MODELS_FAILED') errorMsg += tr('aiBothFailed');
+        else errorMsg += tr('aiTryLater');
+        addChatMessage('⚠️ ' + errorMsg, 'ai');
+    }
+}
+
+// ============================================================
+//  APP DOWNLOAD
+// ============================================================
+const APP_DOWNLOAD_URL = 'https://github.com/mahidahmed11123-beep/My-edi/raw/main/Asirganj-Madrasa.apk';
+
+function downloadApp() {
+    // সরাসরি APK ডাউনলোড শুরু হবে
+    window.location.href = APP_DOWNLOAD_URL;
+}
+
+function copyDownloadLink() {
+    const lbl = document.getElementById('dlCopyLbl');
+    const done = () => {
+        lbl.textContent = tr('dlCopied');
+        setTimeout(() => { lbl.textContent = tr('dlCopy'); }, 2000);
+    };
+    const fallback = () => {
+        const ta = document.createElement('textarea');
+        ta.value = APP_DOWNLOAD_URL;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) {}
+        ta.remove();
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(APP_DOWNLOAD_URL).then(done).catch(fallback);
+    } else {
+        fallback();
+    }
+}
+
+// ============================================================
+//  INIT
+// ============================================================
+buildClassSelect();
+updateExamOptions();
+buildYearSelect();
+buildAISelects();
+applyStaticText();
+loadNotices();
+loadTeachers();
+
+setTimeout(() => {
+    if (!hasAPIKey()) console.log('💡 No API key found. Click the ⚙️ button to add one.');
+}, 3000);
+</script>
+</body>
+</html>
